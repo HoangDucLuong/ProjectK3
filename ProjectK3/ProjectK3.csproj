@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Hello\**" />
+    <Content Remove="Hello\**" />
+    <EmbeddedResource Remove="Hello\**" />
+    <None Remove="Hello\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
@@ -20,10 +27,6 @@
     <Folder Include="Repositories\UserService\" />
     <Folder Include="Repositories\PaymentServices\" />
     <Folder Include="Repositories\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Hello\" />
   </ItemGroup>
 
 </Project>
