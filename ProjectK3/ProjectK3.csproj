@@ -22,4 +22,8 @@
     <Folder Include="Repositories\Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Hello\" />
+  </ItemGroup>
+
 </Project>
