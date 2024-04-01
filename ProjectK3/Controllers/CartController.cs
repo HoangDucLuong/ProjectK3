@@ -19,10 +19,6 @@ namespace ProjectK3.Controllers
         { 
             return Ok(_cart.Carts.ToList());
         }
-        [HttpPost]
-        public IActionResult GetAll1()
-        {
-            return Ok(_cart.Carts.ToList());
-        }
+        
     }
 }
