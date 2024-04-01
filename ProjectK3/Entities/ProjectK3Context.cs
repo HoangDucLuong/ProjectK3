@@ -29,13 +29,13 @@ public partial class ProjectK3Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-RQ8HM1R;Initial Catalog=ProjectK3;Persist Security Info=True;User ID=sa;Password=123;Encrypt=True;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=KDYO;Initial Catalog=ProjectK3;Persist Security Info=True;User ID=sa;Password=123;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A27F4646A15");
+            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A27221123B6");
 
             entity.ToTable("Cart");
 
@@ -51,16 +51,16 @@ public partial class ProjectK3Context : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Cart__product_id__47DBAE45");
+                .HasConstraintName("FK__Cart__product_id__48CFD27E");
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Cart__user_id__46E78A0C");
+                .HasConstraintName("FK__Cart__user_id__47DBAE45");
         });
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8C84E77041");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8CB8EAB5D8");
 
             entity.ToTable("Feedback");
 
@@ -87,7 +87,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__4659622926EC33D2");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__465962290F9C0AE4");
 
             entity.Property(e => e.OrderId)
                 .ValueGeneratedNever()
@@ -117,7 +117,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__ED1FC9EA0DBE2970");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__ED1FC9EAE2D3D78C");
 
             entity.Property(e => e.PaymentId)
                 .ValueGeneratedNever()
@@ -141,9 +141,9 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF5AAC220FD");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF5EE4EFB84");
 
-            entity.HasIndex(e => e.UniqueCode, "UQ__Products__8E12EA40A230F9A2").IsUnique();
+            entity.HasIndex(e => e.UniqueCode, "UQ__Products__8E12EA401334E523").IsUnique();
 
             entity.Property(e => e.ProductId)
                 .ValueGeneratedNever()
@@ -166,7 +166,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F126C082E");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370FD3F9E6DA");
 
             entity.Property(e => e.UserId)
                 .ValueGeneratedNever()
