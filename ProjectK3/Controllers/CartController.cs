@@ -14,11 +14,7 @@ namespace ProjectK3.Controllers
         {
             _cart = cart;
         }
-        [HttpGet]
-        public IActionResult GetAll() 
-        { 
-            return Ok(_cart.Carts.ToList());
-        }
+       
         
     }
 }
