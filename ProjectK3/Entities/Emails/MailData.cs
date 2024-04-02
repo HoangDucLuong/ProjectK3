@@ -35,5 +35,5 @@ public class MailData
         Subject = subject;
         Body = body;
     }
-}{
+
 }

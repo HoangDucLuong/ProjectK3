@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ProjectK3.Entities.Accounts;
 
 namespace ProjectK3.Entities;
 
@@ -25,6 +26,8 @@ public partial class ProjectK3Context : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<Status> Statuses { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,7 +38,7 @@ public partial class ProjectK3Context : DbContext
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A27221123B6");
+            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A279998C3C9");
 
             entity.ToTable("Cart");
 
@@ -51,16 +54,16 @@ public partial class ProjectK3Context : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Cart__product_id__48CFD27E");
+                .HasConstraintName("FK__Cart__product_id__4CA06362");
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Cart__user_id__47DBAE45");
+                .HasConstraintName("FK__Cart__user_id__4BAC3F29");
         });
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8CB8EAB5D8");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8CEEE5D0DF");
 
             entity.ToTable("Feedback");
 
@@ -78,16 +81,16 @@ public partial class ProjectK3Context : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Feedback__produc__412EB0B6");
+                .HasConstraintName("FK__Feedback__produc__45F365D3");
 
             entity.HasOne(d => d.User).WithMany(p => p.Feedbacks)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Feedback__user_i__403A8C7D");
+                .HasConstraintName("FK__Feedback__user_i__44FF419A");
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__465962290F9C0AE4");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__465962290EFFD079");
 
             entity.Property(e => e.OrderId)
                 .ValueGeneratedNever()
@@ -104,20 +107,25 @@ public partial class ProjectK3Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("status");
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.Product).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Orders__product___3D5E1FD2");
+                .HasConstraintName("FK__Orders__product___4222D4EF");
+
+            entity.HasOne(d => d.StatusNavigation).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("FK__Orders__status_i__403A8C7D");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK__Orders__user_id__3C69FB99");
+                .HasConstraintName("FK__Orders__user_id__412EB0B6");
         });
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__ED1FC9EAE2D3D78C");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__ED1FC9EAD7B7648A");
 
             entity.Property(e => e.PaymentId)
                 .ValueGeneratedNever()
@@ -136,14 +144,14 @@ public partial class ProjectK3Context : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.Payments)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__Payments__order___440B1D61");
+                .HasConstraintName("FK__Payments__order___48CFD27E");
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF5EE4EFB84");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF5A2A3928C");
 
-            entity.HasIndex(e => e.UniqueCode, "UQ__Products__8E12EA401334E523").IsUnique();
+            entity.HasIndex(e => e.UniqueCode, "UQ__Products__8E12EA40B9401C0E").IsUnique();
 
             entity.Property(e => e.ProductId)
                 .ValueGeneratedNever()
@@ -158,15 +166,35 @@ public partial class ProjectK3Context : DbContext
             entity.Property(e => e.Price)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("price");
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
             entity.Property(e => e.UniqueCode)
                 .HasMaxLength(7)
                 .IsUnicode(false)
                 .HasColumnName("unique_code");
+
+            entity.HasOne(d => d.Status).WithMany(p => p.Products)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("FK__Products__status__3D5E1FD2");
+        });
+
+        modelBuilder.Entity<Status>(entity =>
+        {
+            entity.HasKey(e => e.StatusId).HasName("PK__Status__3683B53184EF1AB7");
+
+            entity.ToTable("Status");
+
+            entity.Property(e => e.StatusId)
+                .ValueGeneratedNever()
+                .HasColumnName("status_id");
+            entity.Property(e => e.StatusName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("status_name");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370FD3F9E6DA");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F873A648F");
 
             entity.Property(e => e.UserId)
                 .ValueGeneratedNever()
@@ -182,10 +210,16 @@ public partial class ProjectK3Context : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("password");
+            entity.Property(e => e.Role).HasMaxLength(30);
+            entity.Property(e => e.StatusId).HasColumnName("status_id");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("username");
+
+            entity.HasOne(d => d.Status).WithMany(p => p.Users)
+                .HasForeignKey(d => d.StatusId)
+                .HasConstraintName("FK__Users__status_id__398D8EEE");
         });
 
         OnModelCreatingPartial(modelBuilder);

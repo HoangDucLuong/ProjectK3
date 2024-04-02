@@ -7,6 +7,8 @@ public partial class Product
 {
     public int ProductId { get; set; }
 
+    public int? StatusId { get; set; }
+
     public string? Name { get; set; }
 
     public string? Description { get; set; }
@@ -20,4 +22,6 @@ public partial class Product
     public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual Status? Status { get; set; }
 }
