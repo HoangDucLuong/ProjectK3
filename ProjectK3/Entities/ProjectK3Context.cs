@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ProjectK3.Entities.Accounts;
 
 namespace ProjectK3.Entities;
 
@@ -20,6 +19,8 @@ public partial class ProjectK3Context : DbContext
 
     public virtual DbSet<Feedback> Feedbacks { get; set; }
 
+    public virtual DbSet<Inventory> Inventories { get; set; }
+
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
@@ -32,13 +33,13 @@ public partial class ProjectK3Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=KDYO;Initial Catalog=ProjectK3;Persist Security Info=True;User ID=sa;Password=123;Encrypt=True;Trust Server Certificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-RQ8HM1R;Initial Catalog=ProjectK3;Persist Security Info=True;User ID=sa;Password=123;Encrypt=True;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A279998C3C9");
+            entity.HasKey(e => e.CartId).HasName("PK__Cart__2EF52A2760400C3A");
 
             entity.ToTable("Cart");
 
@@ -63,7 +64,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Feedback>(entity =>
         {
-            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8CEEE5D0DF");
+            entity.HasKey(e => e.FeedbackId).HasName("PK__Feedback__7A6B2B8C2FA52951");
 
             entity.ToTable("Feedback");
 
@@ -88,9 +89,26 @@ public partial class ProjectK3Context : DbContext
                 .HasConstraintName("FK__Feedback__user_i__44FF419A");
         });
 
+        modelBuilder.Entity<Inventory>(entity =>
+        {
+            entity.HasKey(e => e.InventoryId).HasName("PK__Inventor__B59ACC492E684F20");
+
+            entity.ToTable("Inventory");
+
+            entity.Property(e => e.InventoryId)
+                .ValueGeneratedNever()
+                .HasColumnName("inventory_id");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Inventories)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK__Inventory__produ__5070F446");
+        });
+
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__465962290EFFD079");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__4659622983A94A2D");
 
             entity.Property(e => e.OrderId)
                 .ValueGeneratedNever()
@@ -125,7 +143,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__ED1FC9EAD7B7648A");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__ED1FC9EAF4438E4C");
 
             entity.Property(e => e.PaymentId)
                 .ValueGeneratedNever()
@@ -149,9 +167,9 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF5A2A3928C");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__47027DF56687C8CC");
 
-            entity.HasIndex(e => e.UniqueCode, "UQ__Products__8E12EA40B9401C0E").IsUnique();
+            entity.HasIndex(e => e.UniqueCode, "UQ__Products__8E12EA408D2FEF07").IsUnique();
 
             entity.Property(e => e.ProductId)
                 .ValueGeneratedNever()
@@ -179,7 +197,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<Status>(entity =>
         {
-            entity.HasKey(e => e.StatusId).HasName("PK__Status__3683B53184EF1AB7");
+            entity.HasKey(e => e.StatusId).HasName("PK__Status__3683B5312505788E");
 
             entity.ToTable("Status");
 
@@ -194,7 +212,7 @@ public partial class ProjectK3Context : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F873A648F");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F8F42C0F5");
 
             entity.Property(e => e.UserId)
                 .ValueGeneratedNever()

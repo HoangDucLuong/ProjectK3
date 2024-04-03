@@ -3,19 +3,13 @@ using System.Collections.Generic;
 
 namespace ProjectK3.Entities;
 
-public partial class Cart
+public partial class Inventory
 {
-    public int CartId { get; set; }
-
-    public int? UserId { get; set; }
+    public int InventoryId { get; set; }
 
     public int? ProductId { get; set; }
 
     public int? Quantity { get; set; }
 
-    public DateTime? DateAdded { get; set; }
-
     public virtual Product? Product { get; set; }
-
-    public virtual User? User { get; set; }
 }
