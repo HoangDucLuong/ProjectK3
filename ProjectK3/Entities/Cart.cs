@@ -17,5 +17,5 @@ public partial class Cart
 
     public virtual Product? Product { get; set; }
 
-    public virtual User? User { get; set; }
+    public virtual Accounts.User? User { get; set; }
 }

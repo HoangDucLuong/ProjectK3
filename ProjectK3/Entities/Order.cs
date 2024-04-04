@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectK3.Entities.Accounts;
+using System;
 using System.Collections.Generic;
 
 namespace ProjectK3.Entities;
@@ -7,7 +8,7 @@ public partial class Order
 {
     public int OrderId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public int? StatusId { get; set; }
 
